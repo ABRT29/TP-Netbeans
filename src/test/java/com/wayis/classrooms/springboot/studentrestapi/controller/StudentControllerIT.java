@@ -30,13 +30,13 @@ public class StudentControllerIT {
     TestRestTemplate restTemplate = new TestRestTemplate();
     HttpHeaders headers = new HttpHeaders();
 	
-	// Exercice n°1 :
+    // Exercice n°1 :
 	
     @Nested
     @DisplayName("GET /students/{student}/courses")
     class GetRetrieveCoursesForStudent {
 		
-		// Route permettant de récupérer la liste des cours d'un étudiant :
+        // Route permettant de récupérer la liste des cours d'un étudiant :
         @Test
         @DisplayName("should return student's courses")
         public void testRetrieveCoursesForStudent() throws JSONException {
@@ -53,8 +53,8 @@ public class StudentControllerIT {
             JSONAssert.assertEquals(expected, response.getBody(), true);
         }
 		
-		// Route de récupération de la liste des cours dans le cas ou l'étudiant est null :
-		@Test
+	// Route de récupération de la liste des cours dans le cas ou l'étudiant est null :
+	@Test
         @DisplayName("shouldn't return student's courses when the student is unknown")
         public void testRetrieveCoursesWhenStudentIsUnknown() throws JSONException
         {
@@ -76,7 +76,7 @@ public class StudentControllerIT {
     @DisplayName("GET /students/{student}/courses/{course}")
     class GetStudentCourse {
 		
-		//Route permettant de récupérer un cours en particulier de la liste des cours d'un étudiant en particulier :
+	//Route permettant de récupérer un cours en particulier de la liste des cours d'un étudiant en particulier :
         @Test
         @DisplayName("should return a JSON course object")
         public void testRetrieveStudentCourse() throws JSONException {
@@ -93,8 +93,8 @@ public class StudentControllerIT {
             JSONAssert.assertEquals(expected, response.getBody(), false);
         }
 		
-		// Route renvoyant null dans le cas où l'étudiant n'existe pas :
-		@Test
+	// Route renvoyant null dans le cas où l'étudiant n'existe pas :
+	@Test
         @DisplayName("should return null when the student is unknown")
 		public void testRetrieveStudentCourseWhenStudentUnknown() throws JSONException {
 
@@ -108,8 +108,8 @@ public class StudentControllerIT {
             JSONAssert.assertEquals(null, response.getBody(), true);
         }
 		
-		// Route renvoyant null dans le cas où le cours et l'étudiant n'existent pas :
-		@Test
+	// Route renvoyant null dans le cas où le cours et l'étudiant n'existent pas :
+	@Test
         @DisplayName("should return null when both course and student are unknown")
 		public void testRetrieveStudentCourseWhenStudentAndCourseUnknown() throws JSONException {
 
@@ -143,9 +143,9 @@ public class StudentControllerIT {
             assertTrue(actual.contains("/students/S-001/courses/"));
         }
 		
-		// Je pense que pour ce test il faut plus tot essayer d'ajouter un cours à un étudiant qui n'existe pas, non pas l'inverse (qu'en penses-tu ?)
+	// Je pense que pour ce test il faut plus tot essayer d'ajouter un cours à un étudiant qui n'existe pas, non pas l'inverse (qu'en penses-tu ?)
 		
-		@Test
+	@Test
         @DisplayName("shouldn't create course if user is unknown")
         public void testAddCourseWhenUserIsUnknown() {
             Student student = new Student();
@@ -198,8 +198,8 @@ public class StudentControllerIT {
         }
     }
 	
-	// 2- Route permettant de récupérer un étudiant avec sa liste de cours :
-	@Nested
+    // 2- Route permettant de récupérer un étudiant avec sa liste de cours :
+    @Nested
     @DisplayName("GET /students/{studentId}")
     class GetStudentAndCourses {
     
@@ -219,7 +219,7 @@ public class StudentControllerIT {
             JSONAssert.assertEquals(expected, response.getBody(), true);
         }
 		
-		@Test
+	@Test
         @DisplayName("Should return null if the student is unknown")
         public void testGetStudentAndCoursesWhenStudentUnknown() throws JSONException {
             
@@ -235,8 +235,8 @@ public class StudentControllerIT {
         
     }
 	
-	// 3- Route permettant de récupérer la liste des étudiants :
-	@Nested
+    // 3- Route permettant de récupérer la liste des étudiants :
+    @Nested
     @DisplayName("GET /students/{studentId}")
     class GetStudentAndCourses {
     
@@ -257,9 +257,8 @@ public class StudentControllerIT {
             JSONAssert.assertEquals(expected, response.getBody(), true);
         }
 		
-		// (test 2 dans le cas ou le précédent ne fonctionne pas, car pour le test précédent j'ai un doute concernant le expected)
-		
-		@Test
+	// (test 2 dans le cas ou le précédent ne fonctionne pas, car pour le test précédent j'ai un doute concernant le expected)	
+	@Test
         @DisplayName("should return a JSON object with all students")
         public void testGetAllStudents() throws JSONException {
             HttpEntity<String> entity = new HttpEntity<>(null, headers);
@@ -278,8 +277,8 @@ public class StudentControllerIT {
     } 
 	
 		
-	// 4- Route permettant d’ajouter un étudiant à la liste des étudiants :
-	@Nested
+    // 4- Route permettant d’ajouter un étudiant à la liste des étudiants :
+    @Nested
     @DisplayName("POST /students")
     class PostStudent {
         @Test
@@ -298,7 +297,7 @@ public class StudentControllerIT {
             assertTrue(actual.contains("/students"));
         }
 		
-		@Test
+	@Test
         @DisplayName("shouldn't create a student if the student is null")
 		public void testAddStudentWhenStudentUnknown() {
 			Student student = new Student();
@@ -309,8 +308,8 @@ public class StudentControllerIT {
                     createURLWithPort("/students"),
                     HttpMethod.POST, entity, String.class);
 	
-			// Je renvoie une erreur 400,car on demande d'ajouter un étudiant or ce dernier est null (je te laisse valider pour ce code d'erreur)
-			// Erreur 400 pour bad request
+	     // Je renvoie une erreur 400,car on demande d'ajouter un étudiant or ce dernier est null (je te laisse valider pour ce code d'erreur)
+	    // Erreur 400 pour bad request
             Assertions.assertEquals(400, response.getStatusCode().value()); 
         }
 		}
