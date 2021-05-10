@@ -19,7 +19,8 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
-
+	
+	//Route permettant de récupérer un étudiant avec sa liste de cours
     @GetMapping("/students/{studentId}/courses")
     public List<Course> retrieveCoursesForStudent(@PathVariable String studentId) {
         return studentService.retrieveCourses(studentId);
@@ -48,9 +49,36 @@ public class StudentController {
     
     //Route permettant de supprimer un cours à un étudiant
     @DeleteMapping("/students/{studentId}/courses/{courseId}")
-    public boolean deleteCourseForStudent(
+    public boolean deleteCourseForAStudent(
             @PathVariable String studentId, @PathVariable String courseId) {
         return studentService.deleteCourse(studentId, courseId);
+    }
+    
+    //Route permettant de récupérer un étudiant avec sa liste de cours
+    @GetMapping("/students/{studentId}")
+    public List<Student> retrieveAllAStudentWithAllCourses(@PathVariable String studentId) {
+        return studentService.retrieveCourses(studentId);
+    }
+    
+    //Route permettant de récupérer la liste des étudiants
+	@GetMapping("/students")
+	public List<Student> retrieveAllStudents() {
+		return studentService.retrieveAllStudents();
+		}
+		
+    //Route permettant d’ajouter un étudiant à la liste des étudiants
+    @PostMapping("/students")
+    public ResponseEntity<Void> addStudentToStudentsList(@RequestBody Student newStudent) {
+        Student student = studentService.addStudent(newStudent);
+
+        if (student == null) {
+            return ResponseEntity.noContent().build();
+        }
+        
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path(
+                "/").buildAndExpand(course.getId()).toUri();
+
+        return ResponseEntity.created(location).build();
     }
     
 }
