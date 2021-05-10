@@ -70,7 +70,18 @@ public class StudentService {
 
         return null;
     }
-
+	
+	public Student addStudent(Student student){
+		
+		if (student.getId() == null){
+			return null;
+			}
+		students.add(student);
+		return student;
+		}
+	
+	
+	
     private final SecureRandom random = new SecureRandom();
 
     public Course addCourse(String studentId, Course course) {
@@ -79,7 +90,8 @@ public class StudentService {
         if (student == null) {
             return null;
         }
-
+	
+	
         String randomId = new BigInteger(130, random).toString(32);
         course.setId(randomId);
 
@@ -89,14 +101,16 @@ public class StudentService {
     }
     
     public boolean deleteCourse(String studentId, String courseId) {
-        //Course course = retrieveCourse(studentId, courseId);
+        
         Student student = retrieveStudent(studentId);
-
 
         if (student == null){
             return false;
         }
             
-        return student.getCourses().removeIf(c -> (c.getId().equals(courseId)));
+        return student.getCourses().removeIf(course -> (course.getId().equals(courseId)));
     }
+    
+    
+    
 }
